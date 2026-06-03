@@ -21,7 +21,7 @@ jobs:
               run: |
                 echo "dtag=${{ github.run_id }}-${GITHUB_SHA::7}" >> ${GITHUB_OUTPUT}
             - name: Build Image By Action
-              uses: uses: docker/build-push-action@v7
+              uses: docker/build-push-action@v7
               with:
                 context:
                 file: './Dockerfile'
