@@ -11,9 +11,8 @@ on:
 jobs:
     build-an-artifact:
         outputs:
-            image-tags:
-                description: "the image tage"
-                value: ${{ steps.var.outputs.dtag }}
+            image-tags: ${{ steps.var.outputs.dtag }}
+                
         runs-on: ubuntu-latest
         steps:
             - name: Checkout Repo
