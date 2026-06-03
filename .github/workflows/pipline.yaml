@@ -27,7 +27,7 @@ jobs:
 
             - name: Save Image Tar
               run : |
-                 TAGS= "${{ steps.var.outputs.dtag}}"
+                 TAGS="${{ steps.var.outputs.dtag}}"
                  docker save -o my-app-image.tar my-app:$TAGS
 
             - name: Upload Artifact
