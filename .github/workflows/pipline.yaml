@@ -34,6 +34,7 @@ jobs:
 
             - name: Save Image Tar
               run : |
+                 docker image ls
                  TAGS="${{ steps.var.outputs.dtag}}" 
                  docker save -o my-app-image.tar my-app:$TAGS
 
