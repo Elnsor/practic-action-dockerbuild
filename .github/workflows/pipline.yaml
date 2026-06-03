@@ -26,6 +26,7 @@ jobs:
                 context: .
                 file: './Dockerfile'
                 push: false
+                load: true
                 tags: my-app:${{ steps.var.outputs.dtag }}
             # - name: Build Image (no Push)
             #   run: |
