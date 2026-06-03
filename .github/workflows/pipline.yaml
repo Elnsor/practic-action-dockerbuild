@@ -23,7 +23,7 @@ jobs:
             - name: Build Image By Action
               uses: docker/build-push-action@v7
               with:
-                context:
+                context: .
                 file: './Dockerfile'
                 push: false
                 tags: my-app:${{ steps.var.outputs.dtag }}
