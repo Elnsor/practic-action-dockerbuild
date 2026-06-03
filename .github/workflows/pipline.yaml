@@ -20,10 +20,17 @@ jobs:
               id: var 
               run: |
                 echo "dtag=${{ github.run_id }}-${GITHUB_SHA::7}" >> ${GITHUB_OUTPUT}
-            - name: Build Image (no Push)
-              run: |
-                TAGS="${{ steps.var.outputs.dtag}}"
-                docker build -t my-app:$TAGS .
+            - name: Build Image By Action
+              uses: uses: docker/build-push-action@v7
+              with:
+                context:
+                file: './Dockerfile'
+                push: false
+                tags: my-app:${{ steps.var.outputs.dtag }}
+            # - name: Build Image (no Push)
+            #   run: |
+            #     TAGS="${{ steps.var.outputs.dtag}}"
+            #     docker build -t my-app:$TAGS .
 
             - name: Save Image Tar
               run : |
