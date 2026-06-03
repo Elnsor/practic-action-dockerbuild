@@ -10,6 +10,10 @@ on:
             - 'dev-*'
 jobs:
     build-an-artifact:
+        outputs:
+            image-tags:
+                description: "the image tage"
+                value: ${{ steps.var.outputs.dtag }}
         runs-on: ubuntu-latest
         steps:
             - name: Checkout Repo
@@ -44,6 +48,31 @@ jobs:
               with:
                 name: docker-image-artifact
                 path: my-app-image.tar
+    publish-image:
+        needs: build-an-artifact
+        runs-on: ubuntu-latest
+        steps:
+            - name : download-image
+              uses: actions/download-artifact@v8
+              with:
+                name: docker-image-artifact
+                path: .
+            - name: Load Docker Image
+              run: docker load -i my-app-image.tar
+            - name:Login to Docker Hub
+              uses: docker/login-action@v4
+              with:
+                username: ${{ secrets.DOCKER_USER }}
+                password: ${{ secrets.DOCKER_TOKEN }}
+            - name: Add TAG Image
+              run: |
+                TAGS=${{ needs.build-an-artifact.outputs.image-tags }}
+                docker image tag my-app:$TAGS ${{ secrets.DOCKER_USER }}/my-app:$TAGS
+            - name: Push Image
+              run: |
+                TAGS=${{ needs.build-an-artifact.outputs.image-tags }}
+                docker image push ${{ secrets.DOCKER_USER }}/my-app:$TAGS
+
 
 
               
