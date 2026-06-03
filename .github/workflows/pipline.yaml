@@ -22,7 +22,7 @@ jobs:
                 echo "dtag=${{ github.run_id }}-${{ GITHUB_SHA::7 }}" >> ${GITHUB_OUTPUT}
             - name: Build Image (no Push)
               run: |
-                TAGS= ${{ steps.var.outputs.dtag}}"
+                TAGS= "${{ steps.var.outputs.dtag}}"
                 docker build -t my-app:$TAGS .
 
             - name: Save Image Tar
@@ -30,7 +30,7 @@ jobs:
                  TAGS= "${{ steps.var.outputs.dtag}}"
 
                 docker save -o my-app-image.tar my-app:$TAGS
-                
+
             - name: Upload Artifact
               uses: actions/upload-artifact@v7
               with:
